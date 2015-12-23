@@ -29,6 +29,13 @@ import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.tapjoy.TJActionRequest;
+import com.tapjoy.TJConnectListener;
+import com.tapjoy.TJError;
+import com.tapjoy.TJPlacement;
+import com.tapjoy.TJPlacementListener;
+import com.tapjoy.Tapjoy;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
@@ -69,6 +76,60 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, RegistrationIntentService.class);
             startService(intent);
         }
+
+        Tapjoy.setDebugEnabled(true);
+        Tapjoy.connect(getApplicationContext(), "hIhIUD1US7K8fgtlYBBOEwECJIk9w0uaSnkgkCfZvUWJ8xSdKq6txFhw887e", null, new TJConnectListener() {
+
+            @Override
+            public void onConnectSuccess() {
+                TJPlacement placement = new TJPlacement(MainActivity.this, "AppLaunch", new TJPlacementListener() {
+                    @Override
+                    public void onRequestSuccess(TJPlacement tjPlacement) {
+
+                    }
+
+                    @Override
+                    public void onRequestFailure(TJPlacement tjPlacement, TJError tjError) {
+
+                    }
+
+                    @Override
+                    public void onContentReady(TJPlacement tjPlacement) {
+                        tjPlacement.showContent();
+                    }
+
+                    @Override
+                    public void onContentShow(TJPlacement tjPlacement) {
+
+                    }
+
+                    @Override
+                    public void onContentDismiss(TJPlacement tjPlacement) {
+
+                    }
+
+                    @Override
+                    public void onPurchaseRequest(TJPlacement tjPlacement, TJActionRequest tjActionRequest, String s) {
+
+                    }
+
+                    @Override
+                    public void onRewardRequest(TJPlacement tjPlacement, TJActionRequest tjActionRequest, String s, int i) {
+
+                    }
+                });
+                placement.requestContent();
+            }
+
+            @Override
+            public void onConnectFailure() {
+
+            }
+        });
+
+        //Tapjoy.setGcmSender("644548857099");
+
+
     }
 
     @Override
